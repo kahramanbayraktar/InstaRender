@@ -1,0 +1,38 @@
+{
+  "project_name": "stress_logic",
+  "slides": [
+    {
+      "type": "cover",
+      "title": "'SAKİN OL' DEMEK...",
+      "subtitle": "Neden Asla İşe Yaramaz?"
+    },
+    {
+      "type": "content",
+      "title": "Çatışma: Yukarıdan Aşağıya Paradoksu",
+      "body": "Stresli bir anda kendine <span class='text-orange-500 font-bold'>saçmalama</span> dersin. Buna Top-Down Regulation denir."
+    },
+    {
+      "type": "mechanism",
+      "title": "Stres Döngüsü",
+      "steps": [
+        "1. Tetikleyici Devreye Girer",
+        "2. Amigdala Tehlike Sinyali Verir",
+        "3. Kortizol ve Adrenalin Artar",
+        "4. Mantıklı Düşünme (Prefrontal Korteks) Kapanır"
+      ]
+    },
+    {
+      "type": "dictionary",
+      "terms": [
+        {
+            "key": "Amigdala",
+            "definition": "Beynin tehdit algılama merkezi."
+        },
+        {
+            "key": "Kortizol",
+            "definition": "Stres hormonu."
+        }
+      ]
+    }
+  ]
+}
