@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Carousel Renderer</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Roboto+Condensed:wght@300;400;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#0f0f0f',
+                        light: '#ffffff',
+                        accent: '#ff8c00',
+                        secondary: '#a0a0a0',
+                    },
+                    fontFamily: {
+                        headline: ['"Oswald"', 'sans-serif'],
+                        body: ['"Roboto"', 'sans-serif'],
+                    },
+                    spacing: {
+                        '1080': '1080px',
+                        '1350': '1350px',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #1a1a1a; /* Just for viewing in browser, slides have their own bg */
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        .slide-container {
+            width: 1080px;
+            height: 1350px;
+            background-color: #0f0f0f;
+            overflow: hidden;
+            position: relative;
+            flex-shrink: 0;
+            /* Texture overlay simulation */
+            background-image: radial-gradient(circle at 50% 50%, #151515 0%, #0f0f0f 100%);
+        }
+        
+        /* Typography overrides */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+        }
+        p, li, span, div {
+            font-family: 'Roboto', sans-serif;
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 20px rgba(255, 140, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+
+    {% for slide in slides %}
+    <div id="slide-{{ loop.index }}" class="slide-container flex flex-col justify-between p-16 relative border border-gray-800">
+        
+        <!-- Header / Top Bar (Optional, purely decorative or for branding) -->
+        <div class="w-full flex justify-between items-center opacity-50">
+            <div class="text-secondary text-lg tracking-widest">{{ project_name | upper }}</div>
+            <div class="text-secondary text-lg">{{ loop.index }} / {{ slides|length }}</div>
+        </div>
+
+        <!-- content area -->
+        <div class="flex-grow flex flex-col justify-center relative z-10 w-full">
+            
+            {% if slide.type == 'cover' %}
+                <div class="text-center space-y-8">
+                    <h2 class="text-accent text-4xl tracking-[0.2em] font-bold animate-pulse">{{ slide.subtitle | upper }}</h2>
+                    <h1 class="text-white text-9xl font-bold leading-tight uppercase glow-text">{{ slide.title | safe }}</h1>
+                </div>
+                <!-- Abstract decorative element -->
+                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-accent opacity-5 rounded-full blur-3xl -z-10"></div>
+
+            {% elif slide.type == 'content' %}
+                <div class="flex flex-col gap-12 mt-[-100px]"> <!-- Shift up slightly -->
+                    <h1 class="text-accent text-7xl font-bold border-l-8 border-accent pl-8 leading-none">{{ slide.title }}</h1>
+                    <div class="text-white text-5xl leading-snug font-light opacity-90 pl-10 pr-4">
+                        {{ slide.body | safe }}
+                    </div>
+                </div>
+
+            {% elif slide.type == 'mechanism' %}
+                <div class="flex flex-col gap-12 h-full justify-center">
+                    <h1 class="text-accent text-7xl font-bold text-center mb-8">{{ slide.title }}</h1>
+                    <div class="space-y-8">
+                        {% for step in slide.steps %}
+                        <div class="flex items-center gap-8 bg-[#1a1a1a] p-8 rounded-2xl border-l-4 border-accent shadow-lg">
+                            <div class="text-white text-4xl font-medium tracking-wide">{{ step }}</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+            {% elif slide.type == 'dictionary' %}
+                <div class="flex flex-col gap-12 h-full justify-center">
+                    <h1 class="text-white text-8xl font-bold mb-12 text-center decoration-accent underline decoration-4 underline-offset-8">SÖZLÜK</h1>
+                    <div class="space-y-12">
+                        {% for term in slide.terms %}
+                        <div class="flex flex-col gap-2">
+                            <div class="flex items-center gap-4">
+                                <div class="w-4 h-4 rounded-full bg-accent"></div>
+                                <h2 class="text-accent text-5xl font-bold">{{ term.key }}</h2>
+                            </div>
+                            <div class="text-white text-4xl pl-8 border-l-2 border-gray-700 ml-2 py-2 text-secondary">
+                                {{ term.definition }}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+            {% endif %}
+
+        </div>
+
+        <!-- Footer -->
+        <div class="w-full flex flex-col items-center gap-2 pt-8 border-t border-gray-800/50 mt-8">
+            <p class="text-secondary text-xl font-medium tracking-[0.3em] uppercase">the.root.logic</p>
+        </div>
+        
+    </div>
+    {% endfor %}
+
+</body>
+</html>
