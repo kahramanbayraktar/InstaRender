@@ -1,38 +1,94 @@
 {
-  "project_name": "stress_logic",
+  "project_name": "untitled_project",
+  "account_handle": "@the.root.logic",
   "slides": [
     {
       "type": "cover",
-      "title": "'SAKİN OL' DEMEK...",
-      "subtitle": "Neden Asla İşe Yaramaz?"
+      "visual": "An X-ray style illustration of a human head, split down the middle. One side is blue and calm (sedated), the other side is red and jagged (inflamed/excited). The background is a dark chalkboard texture.",
+      "title": "KİMYASAL TEFECİLİK",
+      "subtitle": "Alkol, Rahatlamayı Sadece \"Borç\" Verir."
     },
     {
       "type": "content",
-      "title": "Çatışma: Yukarıdan Aşağıya Paradoksu",
-      "body": "Stresli bir anda kendine <span class='text-orange-500 font-bold'>saçmalama</span> dersin. Buna Top-Down Regulation denir."
+      "title": "Ertesi Gün Korkusu",
+      "body": "Arkadaşlarınla içtin, güldün, gevşedin.<br>Ama sabah uyandığında o tanıdık ağırlık göğsüne oturdu.<br>Fiziksel bir baş ağrısından öte, <strong class='text-accent'>tanımsız bir felaket hissi.</strong> Buna popüler kültürde \"Hangxiety\" deniyor.<br>Ama bu psikolojik bir suçluluk değil."
     },
     {
-      "type": "mechanism",
-      "title": "Stres Döngüsü",
-      "steps": [
-        "1. Tetikleyici Devreye Girer",
-        "2. Amigdala Tehlike Sinyali Verir",
-        "3. Kortizol ve Adrenalin Artar",
-        "4. Mantıklı Düşünme (Prefrontal Korteks) Kapanır"
-      ]
+      "type": "content",
+      "title": "Yanılgı vs. Gerçek",
+      "body": "Toplum alkolü bir \"stres ilacı\" olarak görür.<br>\"Bir kadeh iç, gevşe\" denir.<br>Biyoloji ise şunu söyler: <strong class='text-accent'>Alkol, yarının mutluluğundan çalıp bugüne harcamaktır.</strong> Ödediğin faiz ise anksiyetedir."
+    },
+    {
+      "type": "content",
+      "title": "Beynin Fren Sistemi: GABA",
+      "body": "Beyninde sürekli çalışan bir fren pedalı vardır: <strong class='text-accent'>GABA</strong>.<br>Sakinleşmeni ve yavaşlamanı sağlar.<br>Alkol bu reseptörlere bağlandığında, freni yapay olarak kökler.<br>Bu yüzden ilk kadehte omuzların düşer ve dünya yavaşlar.<div class='mt-12 pt-6 border-t border-gray-800 text-secondary text-3xl font-light'>[1] Nutt, D. [2020]</div>"
+    },
+    {
+      "type": "content",
+      "title": "Beynin Gaz Pedalı: Glutamat",
+      "body": "Ama beynin aptal değildir.<br>Sen freni köklediğinde, o da dengeyi (Homeostaz) sağlamak için gaz pedalına, yani <strong class='text-accent'>Glutamat</strong> üretimine yüklenir.<br>Sen içerken beyin, seni uyanık tutmak için arka planda vites yükseltmektedir.<div class='mt-12 pt-6 border-t border-gray-800 text-secondary text-3xl font-light'>[2] Koob, G. F. [2014]</div>"
+    },
+    {
+      "type": "content",
+      "title": "Büyük Çöküş (Rebound)",
+      "body": "Alkol kandan çekildiğinde, yapay fren (GABA) aniden yok olur.<br>Ama beynin ürettiği fazladan gaz pedalı (Glutamat) hala oradadır.<br>Sonuç?<br><strong class='text-accent'>Frensiz ve tam gaz giden bir sinir sistemi.</strong> O \"nedensiz korku\" hissi, beyninin aşırı uyarılmış halidir."
+    },
+    {
+      "type": "content",
+      "title": "Gece 03:00 Uyanışı",
+      "body": "Alkol vücuttan atılırken, baskılanmış olan \"savaş ya da kaç\" sistemi intikam alır.<br><strong class='text-accent'>Noradrenalin</strong> seviyesi fırlar.<br>Gecenin köründe kalbin küt küt atarak uyanmanın sebebi kabuslar değil, vücudunun kimyasal bir tehdit algılayıp seni savaşa hazırlamasıdır."
+    },
+    {
+      "type": "content",
+      "title": "Utangaçlık Tuzağı",
+      "body": "Araştırmalar, sosyal anksiyetesi yüksek bireylerin bu döngüden daha fazla zarar gördüğünü kanıtladı.<br>Alkol içerken \"normal\" hisseden beyin, ertesi gün <strong class='text-accent'>daha şiddetli bir anksiyete (rebound)</strong> ile cezalandırılır.<br>Bu, sosyal güveni zamanla yok eder.<div class='mt-12 pt-6 border-t border-gray-800 text-secondary text-3xl font-light'>[3] Morgan et al. [2018]</div>"
+    },
+    {
+      "type": "content",
+      "title": "Kortizol Maliyeti",
+      "body": "Alkolün çekilmesi, vücut için toksik bir krizdir.<br>HPA ekseni devreye girer ve kana <strong class='text-accent'>Kortizol</strong> (stres hormonu) pompalar.<br>Yani ertesi gün hissettiğin o \"dünya üzerime geliyor\" hissi, sadece senin kuruntun değil; damarlarında dolaşan stres hormonudur."
+    },
+    {
+      "type": "content",
+      "title": "Mantıklı Protokol",
+      "body": "<p class='mb-4'>Biyolojiyi kandıramazsın, ama yönetebilirsin:</p><ul class=\"list-disc pl-8 space-y-4 mt-4 text-4xl\"><li class='text-gray-300'><strong class='text-white'>Kabullen:</strong> Hissettiğin korku gerçek bir tehdit değil, sadece kimyasal bir dengesizlik (Glutamat fırtınası).</li><li class='text-gray-300'><strong class='text-white'>Zamanlama:</strong> Uyumadan önce alkolün atılmasına izin ver ki \"rebound\" etkisi uykunu bölmesin.</li><li class='text-gray-300'><strong class='text-white'>Hidrasyon:</strong> Beyin zarındaki büzüşmeyi (dehidrasyon) engellemek, fiziksel stresi azaltır.</li></ul>"
+    },
+    {
+      "type": "quote",
+      "body": "\"Tüm hazlar ve mutluluklar negatif bir doğaya sahiptir; yani bunlar aslında sadece bir acının yokluğudur.\"",
+      "author": "— Arthur Schopenhauer",
+      "quote": "\"Tüm hazlar ve mutluluklar negatif bir doğaya sahiptir; yani bunlar aslında sadece bir acının yokluğudur.\""
     },
     {
       "type": "dictionary",
       "terms": [
         {
-            "key": "Amigdala",
-            "definition": "Beynin tehdit algılama merkezi."
+          "key": "GABA",
+          "definition": "Beynin ana fren mekanizması, sakinleştirici nörotransmitter."
         },
         {
-            "key": "Kortizol",
-            "definition": "Stres hormonu."
+          "key": "Glutamat",
+          "definition": "Beynin ana uyarıcı mekanizması, aktiviteyi artırır."
+        },
+        {
+          "key": "Homeostaz",
+          "definition": "Vücudun iç dengeyi koruma çabası."
+        },
+        {
+          "key": "Rebound Etkisi",
+          "definition": "Baskılanan bir sistemin, baskı kalkınca aşırı tepki vermesi."
         }
-      ]
+      ],
+      "title": "SÖZLÜK"
+    },
+    {
+      "type": "resources",
+      "resource_items": [
+        "[1] Nutt, D. (2020). *Drink?: The New Science of Alcohol*.",
+        "[2] Koob, G. F. (2014). *Neurocircuitry of Alcohol Addiction*.",
+        "[3] Morgan, C. J., et al. (2018). *Personality and Individual Differences*."
+      ],
+      "title": "KAYNAKLAR"
     }
   ]
 }

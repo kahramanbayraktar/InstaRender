@@ -4,6 +4,7 @@ import os
 import subprocess
 import sys
 from main import DATA_DIR, OUTPUT_DIR
+from converter import parse_markdown
 
 # Page Config
 st.set_page_config(
@@ -50,88 +51,95 @@ st.markdown("""
 
 def main():
     st.title("📸 InstaRender")
-    st.markdown("Instagram Carousel Generator - Python Version")
-
+    
     # Sidebar
     with st.sidebar:
         st.header("Settings")
-        
-        # Load default sample if available
-        default_json_path = os.path.join(DATA_DIR, "sample.json")
-        default_json = ""
-        try:
-            with open(default_json_path, "r", encoding="utf-8") as f:
-                default_json = f.read()
-        except FileNotFoundError:
-            default_json = '{"project_name": "demo", "slides": []}'
-
-        st.info("Edit the JSON configuration to customize your slides.")
+        st.info("Paste your Markdown script in the editor.")
         st.write("---")
         st.caption("the.root.logic")
 
-    # Layout: 2 Columns (Editor vs Preview)
+    # Layout: 2 Columns
     col1, col2 = st.columns([1, 1])
 
     with col1:
-        st.subheader("📝 Content Editor (JSON)")
-        json_input = st.text_area(
-            "Slide Logic:",
-            value=default_json,
-            height=600
+        st.subheader("📝 Markdown Editor")
+        
+        # Default placeholder (empty for clean start)
+        md_input = st.text_area(
+            "Paste your script here:",
+            height=600,
+            key="md_editor",
+            placeholder="### SLIDE 1 (Cover)\nHeader: ...\n..."
         )
 
     with col2:
         st.subheader("🖼️ Preview & Output")
         
-        # Parse JSON
-        try:
-            data = json.loads(json_input)
-            project_name = data.get("project_name", "untitled_project")
-        except json.JSONDecodeError:
-            project_name = "error"
-            st.error("Invalid JSON format!")
-        
-        if st.button("🚀 Render Carousel Images") and project_name != "error":
-            status_text = st.empty()
-            
-            try:
-                # 1. Save current JSON to a temporary file
-                temp_json_path = os.path.join(DATA_DIR, "_temp_render.json")
-                with open(temp_json_path, "w", encoding="utf-8") as f:
-                    f.write(json_input)
+        # ONE BUTTON TO RULE THEM ALL
+        if st.button("🚀 GENERATE CAROUSEL"):
+            if not md_input.strip():
+                st.warning("Please enter some markdown text first.")
+            else:
+                status_text = st.empty()
+                progress = st.progress(0)
                 
-                status_text.info("Rendering in progress (External Process)...")
-                
-                # 2. Call main.py as a separate process
-                python_exe = sys.executable
-                current_dir = os.path.dirname(os.path.abspath(__file__))
-                main_py_path = os.path.join(current_dir, "main.py")
-                
-                result = subprocess.run(
-                    [python_exe, main_py_path, temp_json_path],
-                    capture_output=True,
-                    text=True,
-                    cwd=current_dir
-                )
-                
-                if result.returncode == 0:
-                    status_text.success(f"Generated slides in 'output/{project_name}'!")
+                try:
+                    # 1. Convert Markdown to JSON in memory
+                    status_text.text("Parsing Markdown...")
+                    progress.progress(10)
                     
-                    # 3. Show Gallery
-                    st.write("### Result")
-                    final_output_path = os.path.join(OUTPUT_DIR, project_name)
-                    if os.path.exists(final_output_path):
-                        files = sorted([f for f in os.listdir(final_output_path) if f.endswith('.png')])
-                        grid_cols = st.columns(2)
-                        for i, file in enumerate(files):
-                            file_path = os.path.join(final_output_path, file)
-                            with grid_cols[i % 2]:
-                                st.image(file_path, caption=file, use_container_width=True)
-                else:
-                    st.error(f"Render Error: {result.stderr}")
+                    json_data = parse_markdown(md_input)
+                    project_name = json_data.get("project_name", "untitled_project")
                     
-            except Exception as e:
-                st.error(f"UI Error: {e}")
+                    # 2. Save JSON to temp file
+                    status_text.text(f"Saving Logic for '{project_name}'...")
+                    progress.progress(30)
+                    
+                    temp_json_path = os.path.join(DATA_DIR, "_temp_render.json")
+                    with open(temp_json_path, "w", encoding="utf-8") as f:
+                        json.dump(json_data, f, indent=2, ensure_ascii=False)
+                    
+                    # 3. Call Renderer (Subprocess)
+                    status_text.text("Rendering Visuals (Playwright)...")
+                    progress.progress(50)
+                    
+                    python_exe = sys.executable
+                    current_dir = os.path.dirname(os.path.abspath(__file__))
+                    main_py_path = os.path.join(current_dir, "main.py")
+                    
+                    result = subprocess.run(
+                        [python_exe, main_py_path, temp_json_path],
+                        capture_output=True,
+                        text=True,
+                        cwd=current_dir
+                    )
+                    
+                    progress.progress(100)
+                    
+                    if result.returncode == 0:
+                        status_text.success(f"DONE! Visuals for '{project_name}' generated.")
+                        
+                        # 4. Show Gallery
+                        st.write("### Result")
+                        final_output_path = os.path.join(OUTPUT_DIR, project_name)
+                        if os.path.exists(final_output_path):
+                            files = sorted([f for f in os.listdir(final_output_path) if f.endswith('.png')])
+                            grid_cols = st.columns(2)
+                            for i, file in enumerate(files):
+                                file_path = os.path.join(final_output_path, file)
+                                with grid_cols[i % 2]:
+                                    st.image(file_path, caption=file, use_container_width=True)
+                        
+                        # Show Debug Info (Optional)
+                        with st.expander("Show Generated JSON"):
+                            st.json(json_data)
+                            
+                    else:
+                        st.error(f"Render Error: {result.stderr}")
+                        
+                except Exception as e:
+                    st.error(f"Critical Error: {e}")
 
 if __name__ == "__main__":
     main()

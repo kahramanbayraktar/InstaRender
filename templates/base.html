@@ -1,142 +1,232 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instagram Carousel Renderer</title>
+    <title>InstaRender Pro</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Roboto+Condensed:wght@300;400;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Antonio:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        dark: '#0f0f0f',
-                        light: '#ffffff',
-                        accent: '#ff8c00',
-                        secondary: '#a0a0a0',
+                        dark: '#111111',
+                        surface: '#1a1a1a',
+                        light: '#f5f5f5',
+                        accent: '#FF9F1C', 
+                        secondary: '#888888',
                     },
                     fontFamily: {
-                        headline: ['"Oswald"', 'sans-serif'],
-                        body: ['"Roboto"', 'sans-serif'],
+                        header: ['"Anton"', 'sans-serif'], 
+                        display: ['"Antonio"', 'sans-serif'],
+                        body: ['"Montserrat"', 'sans-serif'],
                     },
                     spacing: {
                         '1080': '1080px',
                         '1350': '1350px',
+                    },
+                    fontSize: {
+                        '10xl': '10rem',
                     }
                 }
             }
         }
     </script>
     <style>
-        body {
-            background-color: #1a1a1a; /* Just for viewing in browser, slides have their own bg */
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-        }
+        body { margin: 0; background-color: #000; display: flex; flex-direction: column; gap: 20px; align-items: center; padding: 20px; }
+        
         .slide-container {
             width: 1080px;
             height: 1350px;
-            background-color: #0f0f0f;
-            overflow: hidden;
+            background-color: #111111;
             position: relative;
+            overflow: hidden;
             flex-shrink: 0;
-            /* Texture overlay simulation */
-            background-image: radial-gradient(circle at 50% 50%, #151515 0%, #0f0f0f 100%);
+            color: #f5f5f5;
+            /* Subtle grain or noise could be added here */
         }
+
+        /* Base Typography */
+        h1, h2 { font-family: 'Antonio', sans-serif; text-transform: uppercase; letter-spacing: -0.02em; }
+        p, li, span { font-family: 'Montserrat', sans-serif; }
         
-        /* Typography overrides */
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Oswald', sans-serif;
-            text-transform: uppercase;
-        }
-        p, li, span, div {
-            font-family: 'Roboto', sans-serif;
-        }
+        .accent-text { color: #FF9F1C; }
+        .highlight { color: #FF9F1C; font-weight: 600; }
         
-        .glow-text {
-            text-shadow: 0 0 20px rgba(255, 140, 0, 0.3);
+        /* Fix for 'vs' to stay lowercase even in capitalized headers */
+        .capitalize-fix { text-transform: capitalize; }
+        .capitalize-fix .vs-fix { text-transform: lowercase !important; font-style: italic; font-family: 'Inter', sans-serif; font-weight: 300; opacity: 0.8; }
+
+        /* Custom List Bullets for Dictionary */
+        ul.dictionary-list li {
+            position: relative;
+            padding-left: 1.5em;
+            margin-bottom: 1.5em;
+        }
+        ul.dictionary-list li::before {
+            content: '●';
+            color: #FF9F1C;
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-size: 0.8em;
+            line-height: 1.5;
+        }
+
+        /* Link Icon for Resources */
+        .link-icon::before {
+            content: '';
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23FF9F1C' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1' /%3E%3C/svg%3E");
+            background-size: contain;
+            margin-right: 12px;
+            vertical-align: middle;
         }
     </style>
 </head>
 <body>
 
     {% for slide in slides %}
-    <div id="slide-{{ loop.index }}" class="slide-container flex flex-col justify-between p-16 relative border border-gray-800">
+    <div id="slide-{{ loop.index }}" class="slide-container flex flex-col relative">
         
-        <!-- Header / Top Bar (Optional, purely decorative or for branding) -->
-        <div class="w-full flex justify-between items-center opacity-50">
-            <div class="text-secondary text-lg tracking-widest">{{ project_name | upper }}</div>
-            <div class="text-secondary text-lg">{{ loop.index }} / {{ slides|length }}</div>
-        </div>
+        <!-- COVER SLIDE -->
+        {% if slide.type == 'cover' %}
+            <!-- Background Image Layer -->
+            <div class="absolute inset-0 z-0">
+                <!-- High Quality Dark Abstract / Topic-based image -->
+                <img src="https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&q=80&w=1080&h=1350" class="w-full h-full object-cover">
+                <!-- Heavy dark overlay to make text pop -->
+                <div class="absolute inset-0 bg-black/50"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/30"></div>
+            </div>
 
-        <!-- content area -->
-        <div class="flex-grow flex flex-col justify-center relative z-10 w-full">
-            
-            {% if slide.type == 'cover' %}
-                <div class="text-center space-y-8">
-                    <h2 class="text-accent text-4xl tracking-[0.2em] font-bold animate-pulse">{{ slide.subtitle | upper }}</h2>
-                    <h1 class="text-white text-9xl font-bold leading-tight uppercase glow-text">{{ slide.title | safe }}</h1>
-                </div>
-                <!-- Abstract decorative element -->
-                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-accent opacity-5 rounded-full blur-3xl -z-10"></div>
-
-            {% elif slide.type == 'content' %}
-                <div class="flex flex-col gap-12 mt-[-100px]"> <!-- Shift up slightly -->
-                    <h1 class="text-accent text-7xl font-bold border-l-8 border-accent pl-8 leading-none">{{ slide.title }}</h1>
-                    <div class="text-white text-5xl leading-snug font-light opacity-90 pl-10 pr-4">
-                        {{ slide.body | safe }}
-                    </div>
+            <div class="relative z-10 h-full flex flex-col p-16">
+                <!-- 1. Header: At the Top -->
+                <!-- 1. Header: At the Top (Anton) -->
+                <div class="pt-20">
+                    <h1 class="text-white text-[140px] font-header leading-[1.1] drop-shadow-2xl capitalize-fix">
+                        {{ slide.title | replace(' vs ', ' <span class="vs-fix">vs</span> ') | replace(' VS ', ' <span class="vs-fix">vs</span> ') | safe }}
+                    </h1>
                 </div>
 
-            {% elif slide.type == 'mechanism' %}
-                <div class="flex flex-col gap-12 h-full justify-center">
-                    <h1 class="text-accent text-7xl font-bold text-center mb-8">{{ slide.title }}</h1>
-                    <div class="space-y-8">
-                        {% for step in slide.steps %}
-                        <div class="flex items-center gap-8 bg-[#1a1a1a] p-8 rounded-2xl border-l-4 border-accent shadow-lg">
-                            <div class="text-white text-4xl font-medium tracking-wide">{{ step }}</div>
+                <!-- Spacer to push subtitle below middle -->
+                <div class="mt-40"></div>
+
+                <!-- 2. Subheader: Below middle, Right Aligned (Antonio/Display) -->
+                <div class="flex justify-end w-full mt-48">
+                    <h2 class="text-accent text-6xl font-display font-normal tracking-tight text-right capitalize max-w-[65%] leading-[1.1]">
+                        {{ slide.subtitle }}
+                    </h2>
+                </div>
+                
+                <!-- 3. Branding: Centered at the very bottom -->
+                <div class="absolute bottom-16 left-0 w-full text-center">
+                    <p class="text-secondary tracking-[0.2em] text-3xl font-medium lowercase opacity-80">{{ account_handle | default('@the.root.logic') }}</p>
+                </div>
+            </div>
+
+        <!-- CONTENT SLIDE -->
+        {% elif slide.type == 'content' %}
+            <div class="p-16 h-full flex flex-col justify-center relative">
+                <!-- Title Top Right or Left (Antonio/Display) -->
+                <div class="mb-16 text-right border-b border-gray-800 pb-8">
+                    <h1 class="text-accent text-7xl font-display font-bold leading-none capitalize-fix">{{ slide.title | replace(' vs ', ' <span class="vs-fix">vs</span> ') | replace(' VS ', ' <span class="vs-fix">vs</span> ') | safe }}</h1>
+                    {% if slide.subtitle %}
+                    <p class="text-secondary text-2xl mt-2 tracking-widest uppercase font-display">{{ slide.subtitle }}</p>
+                    {% endif %}
+                </div>
+
+                <!-- Body -->
+                <div class="text-light text-5xl leading-[1.6] font-light opacity-90 pl-4 border-l-2 border-gray-800">
+                    {{ slide.body | safe }}
+                </div>
+            </div>
+
+        <!-- DICTIONARY / SÖZLÜK -->
+        {% elif slide.type == 'dictionary' %}
+            <div class="p-16 h-full flex flex-col justify-center">
+                <h1 class="text-accent text-8xl font-bold mb-16 text-right selection:bg-accent capitalize">{{ slide.title | default('Sözlük') }}</h1>
+                
+                <ul class="dictionary-list space-y-8">
+                    {% for term in slide.terms %}
+                    <li>
+                        <span class="text-white text-4xl font-bold block mb-1">{{ term.key }}</span>
+                        <span class="text-secondary text-3xl font-light leading-relaxed">{{ term.definition }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+        <!-- RESOURCES / KAYNAKLAR -->
+        {% elif slide.type == 'resources' %}
+            <div class="p-16 h-full flex flex-col justify-center items-center text-center">
+                <h1 class="text-accent text-7xl font-bold mb-20 tracking-wide capitalize">{{ slide.title | default('Kaynaklar') }}</h1>
+                
+                <div class="flex flex-col gap-8 w-full max-w-3xl">
+                    {% for item in slide.resource_items %}
+                    <div class="flex items-start text-left group">
+                        <div class="mt-2 flex-shrink-0">
+                            <span class="link-icon"></span>
                         </div>
-                        {% endfor %}
-                    </div>
-                </div>
-
-            {% elif slide.type == 'dictionary' %}
-                <div class="flex flex-col gap-12 h-full justify-center">
-                    <h1 class="text-white text-8xl font-bold mb-12 text-center decoration-accent underline decoration-4 underline-offset-8">SÖZLÜK</h1>
-                    <div class="space-y-12">
-                        {% for term in slide.terms %}
-                        <div class="flex flex-col gap-2">
-                            <div class="flex items-center gap-4">
-                                <div class="w-4 h-4 rounded-full bg-accent"></div>
-                                <h2 class="text-accent text-5xl font-bold">{{ term.key }}</h2>
-                            </div>
-                            <div class="text-white text-4xl pl-8 border-l-2 border-gray-700 ml-2 py-2 text-secondary">
-                                {{ term.definition }}
-                            </div>
+                        <div class="text-4xl text-gray-300 font-light group-hover:text-white transition-colors">
+                            {{ item | safe }}
                         </div>
-                        {% endfor %}
                     </div>
+                    {% endfor %}
                 </div>
+            </div>
 
-            {% endif %}
+         <!-- QUOTE -->
+         {% elif slide.type == 'quote' %}
+            <div class="p-20 h-full flex flex-col justify-center text-center relative">
+                <!-- Big decorative quote mark -->
+                <div class="text-accent text-[20rem] font-serif absolute top-20 left-10 opacity-10 leading-none">“</div>
+                
+                <div class="relative z-10">
+                    <p class="text-white text-6xl font-serif italic leading-tight mb-12">
+                        {{ slide.quote }}
+                    </p>
+                    {% if slide.author %}
+                    <div class="inline-block border-t border-accent pt-6 mt-4">
+                        <p class="text-secondary text-2xl tracking-[0.2em] uppercase font-bold">{{ slide.author }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
 
+        <!-- MECHANISM (Step by Step) -->
+        {% elif slide.type == 'mechanism' %}
+            <div class="p-16 h-full flex flex-col justify-center">
+                <h1 class="text-accent text-7xl font-bold mb-16 capitalize">{{ slide.title }}</h1>
+                <div class="space-y-6">
+                    {% for step in slide.steps %}
+                    <div class="bg-[#1a1a1a] p-8 border-l-4 border-accent shadow-2xl flex gap-6 items-center">
+                        <div class="text-accent text-5xl font-bold opacity-50">0{{ loop.index }}</div>
+                        <div class="text-white text-3xl font-medium">{{ step }}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        {% endif %}
+
+        <!-- Footer / Branding (All slides except Cover) -->
+        {% if slide.type != 'cover' %}
+        <div class="absolute bottom-12 left-0 w-full text-center opacity-40">
+            <span class="text-white text-2xl tracking-[0.3em] font-medium lowercase">{{ account_handle | default('@the.root.logic') }}</span>
+            <span class="mx-4 text-accent text-2xl">›</span>
+            <span class="text-white text-xl font-light tracking-widest opacity-60">{{ loop.index }} / {{ slides|length }}</span>
         </div>
+        {% endif %}
 
-        <!-- Footer -->
-        <div class="w-full flex flex-col items-center gap-2 pt-8 border-t border-gray-800/50 mt-8">
-            <p class="text-secondary text-xl font-medium tracking-[0.3em] uppercase">the.root.logic</p>
-        </div>
-        
     </div>
     {% endfor %}
 
